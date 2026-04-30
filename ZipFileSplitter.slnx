@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/Src/">
+    <Project Path="Src/ZipFileSplitter09/ZipFileSplitter09.csproj" />
+    <Project Path="Src/ZipFIleSplitter10/ZipFIleSplitter10.csproj" />
+    <Project Path="Src/ZipFileSplitterShare/ZipFileSplitterShare.shproj" />
+  </Folder>
+</Solution>
