@@ -4,4 +4,7 @@
     <Project Path="Src/ZipFIleSplitter10/ZipFIleSplitter10.csproj" />
     <Project Path="Src/ZipFileSplitterShare/ZipFileSplitterShare.shproj" />
   </Folder>
+  <Folder Name="/Test/">
+    <Project Path="Test/FileZipSplitterConsole/FileZipSplitterConsole.csproj" />
+  </Folder>
 </Solution>
