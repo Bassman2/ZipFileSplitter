@@ -1,6 +1,6 @@
 ﻿namespace System.IO.Compression.FileSystem;
 
-internal class FileSplitterStream : Stream
+public class FileSplitterStream : Stream
 {
     private readonly string filePath;
     private readonly long splitSize;

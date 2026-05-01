@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FileZipSplitterConsole Merge": {
+      "commandName": "Project",
+      "commandLineArgs": "merge"
+    }
+  }
+}
