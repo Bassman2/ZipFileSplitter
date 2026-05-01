@@ -1,6 +1,6 @@
 ﻿namespace System.IO.Compression.FileSystem;
 
-public enum NamingFormat
+public enum ExtentionFormat
 {
     /// <summary>
     /// .zip, .z01, .z02, ...

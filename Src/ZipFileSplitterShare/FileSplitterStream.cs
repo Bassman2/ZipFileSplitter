@@ -26,7 +26,7 @@ public class FileSplitterStream : Stream
 
     private FileStream CreateFile()
     {
-        string path = $"{filePath}.{++index:03}";
+        string path = $"{filePath}.{++index:D3}";
         return new FileStream(path, fileMode, fileAccess, fileShare, bufferSize: 0x1000, useAsync: false);
     }
 

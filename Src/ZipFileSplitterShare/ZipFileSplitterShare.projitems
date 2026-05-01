@@ -10,7 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)FileSplitterStream.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NamingFormat.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ExtentionFormat.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ZipFileSplitter.cs" />
   </ItemGroup>
 </Project>

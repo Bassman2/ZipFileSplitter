@@ -1,8 +1,20 @@
 {
   "profiles": {
-    "FileZipSplitterConsole Merge": {
+    "Merge": {
       "commandName": "Project",
       "commandLineArgs": "merge"
+    },
+    "Split": {
+      "commandName": "Project",
+      "commandLineArgs": "split -i \"D:\\_Data\\ZipFileSplitter\\Original.zip\" -o \"D:\\_Data\\ZipFileSplitter\\Split.zip\" -s M2 -e MultiExtention"
+    },
+    "Zip": {
+      "commandName": "Project",
+      "commandLineArgs": "zip"
+    },
+    "Unzip": {
+      "commandName": "Project",
+      "commandLineArgs": "unzip"
     }
   }
 }
