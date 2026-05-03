@@ -37,11 +37,11 @@ public static partial class ZipFileSplitter
             fileShare = FileShare.None;
             break;
 
-        case ZipArchiveMode.Update:
-            fileMode = FileMode.OpenOrCreate;
-            fileAccess = FileAccess.ReadWrite;
-            fileShare = FileShare.None;
-            break;
+        //case ZipArchiveMode.Update:
+        //    fileMode = FileMode.OpenOrCreate;
+        //    fileAccess = FileAccess.ReadWrite;
+        //    fileShare = FileShare.None;
+        //    break;
 
         default:
             throw new ArgumentOutOfRangeException(nameof(mode));
