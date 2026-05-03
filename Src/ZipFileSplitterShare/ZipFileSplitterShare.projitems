@@ -11,6 +11,8 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)FileSplitterStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtentionFormat.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ZipFileSplitter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ZipFileSplitter.Create.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ZipFileSplitter.Extract.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ZipFileSplitter.Open.cs" />
   </ItemGroup>
 </Project>

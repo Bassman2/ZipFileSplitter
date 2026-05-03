@@ -13,7 +13,7 @@ public class FileSplitterStream : Stream
     private long overallLength = 0;
     private long splitLength = 0;
 
-    public FileSplitterStream(string path, long size, FileMode mode, FileAccess access, FileShare share)
+    public FileSplitterStream(string path, long size, ExtentionFormat extentionFormat, FileMode mode, FileAccess access, FileShare share)
     {
         filePath = path;
         splitSize = size;

@@ -13,8 +13,10 @@ namespace FileZipSplitterConsole
             //rootCommand.Options.Add(versionOption);
 
             Command zipCommand = new("zip", "Zip files or folders");
-            zipCommand.Add(new Option<FileInfo>("-o", "--output") { Description = "Output folder for unzipped files", Required = true });
             zipCommand.Add(new Option<FileInfo>("-i", "--input") { Description = "Files or folder to zip", AllowMultipleArgumentsPerToken = true, Required = true });
+            zipCommand.Add(new Option<FileInfo>("-o", "--output") { Description = "Output folder for unzipped files", Required = true });
+            zipCommand.Add(new Option<SplitSizes>("-s", "--splitsize") { Description = "Split size", DefaultValueFactory = _ => SplitSizes.G2 });
+            zipCommand.Add(new Option<ExtentionFormat>("-e", "--extention") { Description = "Extension format", DefaultValueFactory = _ => ExtentionFormat.SingleExtention });
             rootCommand.Subcommands.Add(zipCommand);
 
             Command unzipCommand = new("unzip", "Unzip to folder");
@@ -25,27 +27,33 @@ namespace FileZipSplitterConsole
             Command splitCommand = new("split", "Split one file to multiple");
             splitCommand.Add(new Option<FileInfo>("-i", "--input") { Description = "Output folder for unzipped files", Required = true });
             splitCommand.Add(new Option<FileInfo>("-o", "--output") { Description = "Output folder for unzipped files", Required = true });
-            splitCommand.Add(new Option<SplitSizes>("-s", "--splitsize") { Description = "Split size", DefaultValueFactory = _ => SplitSizes.None });
-            splitCommand.Add(new Option<long>("--split") { Description = "Split size in Bytes", DefaultValueFactory = _ => 0 });
+            splitCommand.Add(new Option<SplitSizes>("-s", "--splitsize") { Description = "Split size", DefaultValueFactory = _ => SplitSizes.G2 });
             splitCommand.Add(new Option<ExtentionFormat>("-e", "--extention") { Description = "Extension format", DefaultValueFactory = _ => ExtentionFormat.SingleExtention });
             rootCommand.Subcommands.Add(splitCommand);
 
             Command mergeCommand = new("merge", "Merge multiple files to one");
-            mergeCommand.Add(new Option<FileInfo>("-i", "--input") { Description = "Output folder for unzipped files" });
-            mergeCommand.Add(new Option<FileInfo>("-o", "--output") { Description = "Output folder for unzipped files" });
+            mergeCommand.Add(new Option<FileInfo>("-i", "--input") { Description = "Output folder for unzipped files", Required = true });
+            mergeCommand.Add(new Option<FileInfo>("-o", "--output") { Description = "Output folder for unzipped files", Required = true });
             rootCommand.Subcommands.Add(mergeCommand);
 
 
             zipCommand.SetAction(parseResult =>
             {
                 FileZipper zipper = new();
-                return zipper.Zip("", "", 0, ExtentionFormat.SingleExtention);
+                string input = parseResult.CommandResult.GetValue<FileInfo>("-i")?.FullName ?? "";
+                string output = parseResult.CommandResult.GetValue<FileInfo>("-o")?.FullName ?? "";
+                SplitSizes splitSize = parseResult.CommandResult.GetValue<SplitSizes>("-s");
+                long size = ((long)splitSize) * 1024;
+                ExtentionFormat extentionFormat = parseResult.CommandResult.GetValue<ExtentionFormat>("-e");
+                return zipper.Zip(input, output, size, extentionFormat);
             });
 
             unzipCommand.SetAction(parseResult =>
             {
                 FileZipper zipper = new();
-                return zipper.Unzip("", "");
+                string input = parseResult.CommandResult.GetValue<FileInfo>("-i")?.FullName ?? "";
+                string output = parseResult.CommandResult.GetValue<FileInfo>("-o")?.FullName ?? "";
+                return zipper.Unzip(input, output);
             });
 
             splitCommand.SetAction(parseResult =>
@@ -62,7 +70,9 @@ namespace FileZipSplitterConsole
             mergeCommand.SetAction(parseResult =>
             {
                 FileZipper zipper = new();
-                return zipper.Merge("", "");
+                string input = parseResult.CommandResult.GetValue<FileInfo>("-i")?.FullName ?? "";
+                string output = parseResult.CommandResult.GetValue<FileInfo>("-o")?.FullName ?? "";
+                return zipper.Merge(input, output);
             });
 
             ParseResult parseResult = rootCommand.Parse(args);

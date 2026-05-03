@@ -1,41 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO.Compression;
 
 namespace System.IO.Compression.FileSystem;
 
-public static class ZipFileSplitter
+public static partial class ZipFileSplitter
 {
+    public static System.IO.Compression.ZipArchive OpenRead(string archiveFileName)
+        => Open(archiveFileName, ZipArchiveMode.Read, 0, ExtentionFormat.SingleExtention, entryNameEncoding: null);
+    public static System.IO.Compression.ZipArchive OpenRead(string archiveFileName, Encoding? entryNameEncoding)
+        => Open(archiveFileName, ZipArchiveMode.Read, 0, ExtentionFormat.SingleExtention, entryNameEncoding: entryNameEncoding);
 
-    //public static ZipArchive OpenRead(string archiveFileName, long splitSize) => Open(archiveFileName, splitSize, ZipArchiveMode.Read);
+    public static System.IO.Compression.ZipArchive Open(string archiveFileName, ZipArchiveMode mode, long splitSize, ExtentionFormat extentionFormat = ExtentionFormat.MultiExtention)
+        => Open(archiveFileName, mode, splitSize, extentionFormat, entryNameEncoding: null);
 
-    //public static ZipArchive Open(string archiveFileName, long splitSize, ZipArchiveMode mode) => Open(archiveFileName, splitSize, mode, entryNameEncoding: null);
-
-    public static ZipArchive Open(string archiveFileName, ZipArchiveMode mode = ZipArchiveMode.Read, long splitSize = 0, Encoding? entryNameEncoding = null)
+    public static ZipArchive Open(string archiveFileName, ZipArchiveMode mode, long splitSize, ExtentionFormat extentionFormat = ExtentionFormat.MultiExtention, Encoding? entryNameEncoding = null)
     {
         // Relies on FileStream's ctor for checking of archiveFileName
 
         FileMode fileMode;
-        FileAccess access;
+        FileAccess fileAccess;
         FileShare fileShare;
 
         switch (mode)
         {
         case ZipArchiveMode.Read:
             fileMode = FileMode.Open;
-            access = FileAccess.Read;
+            fileAccess = FileAccess.Read;
             fileShare = FileShare.Read;
             break;
 
         case ZipArchiveMode.Create:
             fileMode = FileMode.CreateNew;
-            access = FileAccess.Write;
+            fileAccess = FileAccess.Write;
             fileShare = FileShare.None;
             break;
 
         case ZipArchiveMode.Update:
             fileMode = FileMode.OpenOrCreate;
-            access = FileAccess.ReadWrite;
+            fileAccess = FileAccess.ReadWrite;
             fileShare = FileShare.None;
             break;
 
@@ -48,7 +52,7 @@ public static class ZipFileSplitter
         // If the ctor completes without throwing, we know fs has been successfully stores in the archive;
         // If the ctor throws, we need to close it here.
 
-        FileSplitterStream fs = new(archiveFileName, splitSize, fileMode, access, fileShare);
+        FileSplitterStream fs = new(archiveFileName, splitSize, extentionFormat, fileMode, fileAccess, fileShare);
 
         try
         {

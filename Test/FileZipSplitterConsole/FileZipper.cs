@@ -23,7 +23,7 @@ public class FileZipper
     public int Split(string input, string output, long splitSize, ExtentionFormat extentionFormat)
     {
         using var reader = File.OpenRead(input);
-        using var writer = new FileSplitterStream(output, splitSize, FileMode.Create, FileAccess.Write, FileShare.None);
+        using var writer = new FileSplitterStream(output, splitSize, extentionFormat, FileMode.Create, FileAccess.Write, FileShare.None);
         reader.CopyTo(writer);
         return 0;
     }
