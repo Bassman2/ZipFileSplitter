@@ -1,4 +1,4 @@
-﻿namespace System.IO.Compression.FileSystem;
+﻿namespace System.IO.Compression;
 
 public enum ExtentionFormat
 {

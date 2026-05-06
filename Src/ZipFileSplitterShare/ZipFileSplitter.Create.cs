@@ -4,7 +4,7 @@ using System.IO.Compression;
 using System.IO.Enumeration;
 using System.Text;
 
-namespace System.IO.Compression.FileSystem;
+namespace System.IO.Compression;
 
 public static partial class ZipFileSplitter
 {
@@ -24,7 +24,7 @@ public static partial class ZipFileSplitter
 
         using ZipArchive archive = Open(destinationArchiveFileName, ZipArchiveMode.Create, splitSize, extentionFormat, entryNameEncoding);
                
-        DirectoryInfo di = new DirectoryInfo(sourceDirectoryName);
+        DirectoryInfo di = new(sourceDirectoryName);
         if (includeBaseDirectory && di.Parent != null)
         {
             di = di.Parent;
