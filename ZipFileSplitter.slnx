@@ -6,5 +6,6 @@
   </Folder>
   <Folder Name="/Test/">
     <Project Path="Test/FileZipSplitterConsole/FileZipSplitterConsole.csproj" />
+    <Project Path="Test/ZipFileSplitterTest10/ZipFileSplitterTest10.csproj" Id="f28f8c69-3885-4416-a0a6-f8065a7c853a" />
   </Folder>
 </Solution>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.IO.Compression.FileSystem;
+using System.IO.Compression;
 
 namespace FileZipSplitterConsole;
 

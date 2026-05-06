@@ -1,5 +1,5 @@
 ﻿using System.CommandLine;
-using System.IO.Compression.FileSystem;
+using System.IO.Compression;
 
 namespace FileZipSplitterConsole
 {
