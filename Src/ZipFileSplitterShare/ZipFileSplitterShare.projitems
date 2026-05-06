@@ -9,6 +9,8 @@
     <Import_RootNamespace>System.IO.Compression</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)CryptMode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CryptStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FileSplitterStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtentionFormat.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ZipFileSplitter.Create.cs" />
