@@ -1,4 +1,6 @@
-﻿namespace System.IO.Compression.FileSystem;
+﻿using System.Diagnostics;
+
+namespace System.IO.Compression;
 
 public class FileSplitterStream : Stream
 {
@@ -13,6 +15,9 @@ public class FileSplitterStream : Stream
     private int index = 0;
     private long overallLength = 0;
     private long splitLength = 0;
+
+    // debug
+    private string currentFileName = string.Empty;
 
     public FileSplitterStream(string archiveFile, long size, ExtentionFormat format, FileMode mode, FileAccess access, FileShare share)
     {
@@ -49,13 +54,15 @@ public class FileSplitterStream : Stream
 
     private string CreateFileName()
     {
-        return extentionFormat switch
+        currentFileName = extentionFormat switch
         {
             ExtentionFormat.SingleExtention when index == 0 => Path.ChangeExtension(archiveFilePath, ".zip"),
             ExtentionFormat.SingleExtention when index >= 1 => Path.ChangeExtension(archiveFilePath, $".z{index:D2}"),
             ExtentionFormat.MultiExtention => Path.ChangeExtension(archiveFilePath, $".zip.{index + 1:D3}"),
             _ => throw new InvalidOperationException()
         };
+        Debug.WriteLine($"Current file name: {currentFileName}");
+        return currentFileName;
     }
 
     private FileStream? OpenFile()
@@ -116,22 +123,43 @@ public class FileSplitterStream : Stream
 
     public override void Write(byte[] buffer, int offset, int count)
     {
-        long c = Math.Min(count, splitSize - splitLength);
-        if (c > 0)
-        {   
+        long writeSize = Math.Min(count, splitSize - splitLength);
+        if (writeSize == count)
+        {
             fs!.Write(buffer, offset, count);
-            splitLength += c;
-            overallLength += c;
-            count -= (int)c;
+            splitLength += count;
+            overallLength += count;
+
+            if (splitLength != fs.Length)
+            {
+                Debug.WriteLine($"Warning: split length {splitLength:X4} does not match file length {fs.Length:X4}");
+            }
+
+            return;
+        }
+        if (writeSize > 0)
+        {
+            Debug.WriteLine($"    Write offset {offset:X4} count {count:X4} c {writeSize:X4} splitLength {splitLength:X4} splitSize {splitSize:X4}");
+
+            fs!.Write(buffer, offset, (int)writeSize);
+            splitLength += writeSize;
+            overallLength += writeSize;
+            count -= (int)writeSize;
         }
         if (count > 0)
         {
-            index++;
+            fs!.Flush();
+            Debug.WriteLine($"Close file {currentFileName} length {fs?.Length:X7}");
             fs!.Close();
+            fs!.Dispose();
+
+            index++;
             fs = CreateFile();
             splitLength = 0;
 
-            fs.Write(buffer, (int)(offset + c), count);
+            Debug.WriteLine($"    Write offset {offset + writeSize:X4} count {count:X4}");
+
+            fs.Write(buffer, (int)(offset + writeSize), count);
             splitLength += count;
             overallLength += count;
         }

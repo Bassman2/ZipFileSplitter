@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO.Compression;
 
-namespace System.IO.Compression.FileSystem;
+namespace System.IO.Compression;
 
 public static partial class ZipFileSplitter
 {
