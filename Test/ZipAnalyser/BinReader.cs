@@ -20,6 +20,8 @@ public sealed class BinReader : IDisposable
 
     public bool IsEnd => stream.Position >= stream.Length;
 
+    public byte ReadByte() => (byte)stream.ReadByte();
+
     public Int16 ReadInt16BigEndian()
     {
         Span<byte> buffer = stackalloc byte[2];
@@ -27,11 +29,25 @@ public sealed class BinReader : IDisposable
         return BinaryPrimitives.ReadInt16BigEndian(buffer);
     }
 
+    public Int16 ReadInt16LittleEndian()
+    {
+        Span<byte> buffer = stackalloc byte[2];
+        stream.ReadExactly(buffer);
+        return BinaryPrimitives.ReadInt16LittleEndian(buffer);
+    }
+
     public Int32 ReadInt32BigEndian()
     {
         Span<byte> buffer = stackalloc byte[4];
         stream.ReadExactly(buffer);
         return BinaryPrimitives.ReadInt32BigEndian(buffer);
+    }
+
+    public Int32 ReadInt32LittleEndian()
+    {
+        Span<byte> buffer = stackalloc byte[4];
+        stream.ReadExactly(buffer);
+        return BinaryPrimitives.ReadInt32LittleEndian(buffer);
     }
 
     public ReadOnlySpan<byte>  ReadChunk()
