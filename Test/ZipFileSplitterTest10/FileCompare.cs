@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ZipFileSplitterTest;
+﻿namespace ZipFileSplitterTest;
 
 public static class FileCompare
 {
