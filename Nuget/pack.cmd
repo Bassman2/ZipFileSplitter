@@ -1,0 +1,1 @@
+nuget pack ZipFileSplitter.nuspec -properties Configuration=Release

@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>System.IO.Compression.FileSystem</RootNamespace>
+    <Version>1.0.0.0</Version>
   </PropertyGroup>
 
   <Import Project="..\ZipFileSplitterShare\ZipFileSplitterShare.projitems" Label="Shared" />
