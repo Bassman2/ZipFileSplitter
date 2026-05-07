@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ZipAnalyser": {
+      "commandName": "Project",
+      "commandLineArgs": "-f ..\\..\\..\\..\\..\\TestData\\Comp\\Single.zip"
+    }
+  }
+}
