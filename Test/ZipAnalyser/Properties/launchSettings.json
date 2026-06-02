@@ -2,7 +2,7 @@
   "profiles": {
     "ZipAnalyser": {
       "commandName": "Project",
-      "commandLineArgs": "-f ..\\..\\..\\..\\..\\TestData\\Comp\\Single.zip"
+      "commandLineArgs": "-f \"C:\\temp\\ZipLink\\Demo\\Demo.zip\""
     }
   }
 }
